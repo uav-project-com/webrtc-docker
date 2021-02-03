@@ -11,4 +11,6 @@ docker rm -f ssh
 ./1.run.sh
 
 - ssh into image with username/passwd: admin/canhthong
+```
 ssh admin@127.0.0.1 -p 2222
+```
