@@ -1,0 +1,20 @@
+---
+version: "2.1"
+services:
+  openssh-server-ubuntu20.04:
+    image: ghcr.io/linuxserver/openssh-server
+    container_name: webrtc
+    hostname: openssh-server #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - SUDO_ACCESS=true #optional
+      - PASSWORD_ACCESS=true #optional
+      - USER_PASSWORD=canhthong #optional
+      - USER_NAME=admin #optional
+    volumes:
+      - ./volume:/config
+    ports:
+      - 2222:2222
+    restart: unless-stopped
