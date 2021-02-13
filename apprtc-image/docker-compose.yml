@@ -2,7 +2,7 @@
 version: "2.1"
 services:
   openssh-server-ubuntu20.04:
-    image: ghcr.io/linuxserver/openssh-server
+    image: webrtc:1.0
     container_name: webrtc
     hostname: openssh-server #optional
     environment:
@@ -13,6 +13,15 @@ services:
       - PASSWORD_ACCESS=true #optional
       - USER_PASSWORD=canhthong #optional
       - USER_NAME=admin #optional
+      - WSS_INSTANCE_HOST_KEY=admasterlife.com:8443 # echo $EXP --> will has env value
+      - WSS_INSTANCE_NAME_KEY=wsserver-std
+      - WSS_INSTANCE_ZONE_KEY=us-central1-a
+      - WSS_INSTANCES=[{"WSS_INSTANCE_HOST_KEY":"admasterlife.com:8443","WSS_INSTANCE_NAME_KEY":"collinder-2","WSS_INSTANCE_ZONE_KEY":"vn-nhanhoa-02"},{"WSS_INSTANCE_HOST_KEY":"admasterlife.com:8443","WSS_INSTANCE_NAME_KEY":"collinder-1","WSS_INSTANCE_ZONE_KEY":"vn-nhanhoa-01"}]
+      - ICE_SERVER_OVERRIDE=[{"urls":"turn:103.101.163.159:3478?transport=udp","username":"nobjta_9x_tq","credential":"canhthong"},{"urls":"turn:103.101.163.159:3478?transport=tcp","username":"nobjta_9x_tq","credential":"canhthong"}]
+      - WSS_HOST_ACTIVE_HOST_KEY=admasterlife.com:8443
+      - USING_SSL=true
+      - FULL_PEM=./webrtc/full.pem
+      - KEY_PEM=./webrtc/key.pem
     volumes:
       - ./volume:/config
     ports:
