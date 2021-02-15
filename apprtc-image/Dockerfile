@@ -18,10 +18,10 @@ CMD /root/google-cloud-sdk/bin/dev_appserver.py \
 --ssl_certificate_key_path /root/key.pem \
 --enable_host_checking false --dev_appserver_log_level debug \
 --go_debugging true --admin_host $HOST \
---host $HOST --specified_service_ports default:442  /root/app_engine/
+--host $HOST --specified_service_ports default:8442  /root/app_engine/
 
 # ssh, web, https web
-EXPOSE 2222 442 443 8000
+EXPOSE 2222 8442 8443 8000
 
 # config constant.py ra ngoài docker (file này không cần compile mà chạy luôn được)
 # tiep theo: tách riêng turnserver và colider ra riêng 2 docker khác nhau

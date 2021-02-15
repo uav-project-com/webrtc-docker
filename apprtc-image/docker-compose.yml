@@ -28,9 +28,6 @@ services:
       - ./volume:/config
     ports:
       - 2222:2222
-      - 80:442
-      - 443:443
-      - 8000:8000
     restart: unless-stopped
 networks:
   # default network (not docker0) for web & db service
