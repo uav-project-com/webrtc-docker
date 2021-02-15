@@ -17,8 +17,8 @@ CMD /root/google-cloud-sdk/bin/dev_appserver.py \
 --ssl_certificate_path /root/full.pem \
 --ssl_certificate_key_path /root/key.pem \
 --enable_host_checking false --dev_appserver_log_level debug \
---go_debugging true --admin_host 127.0.0.1 \
---host 127.0.0.1 --specified_service_ports default:442  /root/app_engine/
+--go_debugging true --admin_host $HOST \
+--host $HOST --specified_service_ports default:442  /root/app_engine/
 
 # ssh, web, https web
 EXPOSE 2222 442 443 8000

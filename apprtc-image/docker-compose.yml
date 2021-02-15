@@ -1,5 +1,5 @@
 ---
-version: "2.1"
+version: "3.5"
 services:
   openssh-server-ubuntu20.04:
     image: webrtc:1.0
@@ -23,6 +23,7 @@ services:
       - USING_SSL=true
       - FULL_PEM=./webrtc/full.pem
       - KEY_PEM=./webrtc/key.pem
+      - HOST=192.168.1.9
     volumes:
       - ./volume:/config
     ports:
@@ -31,3 +32,9 @@ services:
       - 443:443
       - 8000:8000
     restart: unless-stopped
+networks:
+  # default network (not docker0) for web & db service
+  default:
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
