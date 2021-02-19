@@ -2,7 +2,20 @@
 #### webrtc branch: webrtc
 #### folder docker files: ./apprtc-image
 
-<b>If this project help you reduce time to develop, you can give me a cup of coffee :)</b><br/>
+
+You will need to save the Docker image as a tar file:
+
+``` docker save -o <path for generated tar file> <image name> ```
+<br>Then copy your image to a new system with regular file transfer tools such as cp, scp or rsync(preferred for big files). After that you will have to load the image into Docker:
+
+``` docker load -i <path to image tar file> ```
+<br>PS: You may need to sudo all commands.
+
+EDIT: You should add filename (not just directory) with -o, for example:
+
+``` docker save -o c:/myfile.tar centos:16 ```
+
+<br><b>If this project help you reduce time to develop, you can give me a cup of coffee :)</b><br/>
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://github.com/uav-project-com/webrtc-docker/blob/master/donate.txt)
 
 
@@ -294,3 +307,15 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 * **13.01.20:** - Add openssh-sftp-server.
 * **19.12.19:** - Rebasing to alpine 3.11.
 * **17.10.19:** - Initial Release.
+
+
+### How to create free ssl:
+- register on https://manage.sslforfree.com for 3 months free
+- create www/.well-known/pki-validation/
+- copy text file downloaded to this location
+- run:
+```
+python3 -m http.server -d www
+```
+- press next step for verify ssl => done
+

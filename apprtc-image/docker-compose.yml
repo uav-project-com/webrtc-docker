@@ -23,7 +23,7 @@ services:
       - USING_SSL=true
       - FULL_PEM=./webrtc/full.pem
       - KEY_PEM=./webrtc/key.pem
-      - HOST=192.168.1.9
+      - HOST=10.184.0.2
     volumes:
       - ./volume:/config
     ports:
@@ -34,4 +34,4 @@ networks:
   default:
     ipam:
       config:
-        - subnet: 192.168.1.0/24
+        - subnet: 10.184.0.0/32
