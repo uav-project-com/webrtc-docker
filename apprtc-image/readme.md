@@ -1,3 +1,5 @@
+- Dockerfile: file để build image webrtc
+- docker-compose.yml: file để chạy image lên thành container
 - run docker compose
 docker-compose up -d
 

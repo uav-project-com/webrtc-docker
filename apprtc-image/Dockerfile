@@ -1,6 +1,6 @@
 FROM ghcr.io/linuxserver/openssh-server
 
-RUN apk update && apk add --no-cache 'python2'
+RUN apk add --no-cache 'python2'
 
 COPY ./webrtc/sdk.tar.gz /root/
 RUN tar -xvzf /root/sdk.tar.gz -C /root
@@ -12,6 +12,12 @@ COPY ./webrtc/key.pem /root/
 COPY ./webrtc/app_engine.tar.gz /root/
 RUN tar -xvzf /root/app_engine.tar.gz -C /root
 RUN rm -f /root/app_engine.tar.gz
+
+RUN export GOROOT=/root/uav-project/go && \
+export GOPATH=/root/uav-project/goWorkspace && \
+export GOBIN=$GOROOT/bin && \
+export PATH=$PATH:$GOBIN:$GOPATH
+
 
 CMD /root/google-cloud-sdk/bin/dev_appserver.py \
 --ssl_certificate_path /root/full.pem \

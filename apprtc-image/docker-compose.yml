@@ -5,33 +5,23 @@ services:
     image: webrtc:1.0
     container_name: webrtc
     hostname: openssh-server #optional
-    network_mode : host
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/London
-      - SUDO_ACCESS=true #optional
-      - PASSWORD_ACCESS=true #optional
-      - USER_PASSWORD=canhthong #optional
-      - USER_NAME=admin #optional
-      - WSS_INSTANCE_HOST_KEY=admasterlife.com:8443 # echo $EXP --> will has env value
-      - WSS_INSTANCE_NAME_KEY=wsserver-std
-      - WSS_INSTANCE_ZONE_KEY=us-central1-a
-      - WSS_INSTANCES=[{"WSS_INSTANCE_HOST_KEY":"admasterlife.com:8443","WSS_INSTANCE_NAME_KEY":"collinder-2","WSS_INSTANCE_ZONE_KEY":"vn-nhanhoa-02"},{"WSS_INSTANCE_HOST_KEY":"admasterlife.com:8443","WSS_INSTANCE_NAME_KEY":"collinder-1","WSS_INSTANCE_ZONE_KEY":"vn-nhanhoa-01"}]
-      - ICE_SERVER_OVERRIDE=[{"urls":"turn:103.101.163.159:3478?transport=udp","username":"nobjta_9x_tq","credential":"canhthong"},{"urls":"turn:103.101.163.159:3478?transport=tcp","username":"nobjta_9x_tq","credential":"canhthong"}]
-      - WSS_HOST_ACTIVE_HOST_KEY=admasterlife.com:8443
-      - USING_SSL=true
-      - FULL_PEM=./webrtc/full.pem
-      - KEY_PEM=./webrtc/key.pem
-      - HOST=10.184.0.2
+      - SUDO_ACCESS=true # ssh optional
+      - PASSWORD_ACCESS=true # ssh optional
+      - USER_PASSWORD=canhthong # ssh optional
+      - USER_NAME=admin # ssh optional
+      - HOST=0.0.0.0 # listen public ip - very importance
     volumes:
-      - ./volume:/config
+      - ./volume:/config # for ssh config
+      - ./webrtc/full.pem:/root/full.pem # all in one: key-private, cert file(public key), and bundle file
+      - ./webrtc/key.pem:/root/key.pem
+      - ./webrtc/constants.py:/root/app_engine/constants.py # for all config of apprtc project
     ports:
       - 2222:2222
+      - 5443:8443
+      - 5442:8442
+      - 5000:8000
     restart: unless-stopped
-networks:
-  # default network (not docker0) for web & db service
-  default:
-    ipam:
-      config:
-        - subnet: 10.184.0.0/32
