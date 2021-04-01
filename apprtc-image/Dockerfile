@@ -13,11 +13,6 @@ COPY ./webrtc/app_engine.tar.gz /root/
 RUN tar -xvzf /root/app_engine.tar.gz -C /root
 RUN rm -f /root/app_engine.tar.gz
 
-RUN export GOROOT=/root/uav-project/go && \
-export GOPATH=/root/uav-project/goWorkspace && \
-export GOBIN=$GOROOT/bin && \
-export PATH=$PATH:$GOBIN:$GOPATH
-
 
 CMD /root/google-cloud-sdk/bin/dev_appserver.py \
 --ssl_certificate_path /root/full.pem \
@@ -31,3 +26,4 @@ EXPOSE 2222 8442 8443 8000
 
 # config constant.py ra ngoài docker (file này không cần compile mà chạy luôn được)
 # tiep theo: tách riêng turnserver và colider ra riêng 2 docker khác nhau
+# tiep theo: turnserver len ok, webrtc dang khong connect duoc collider, collider dang bi reset lien tuc

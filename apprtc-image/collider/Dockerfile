@@ -12,15 +12,15 @@ ENV GOPATH=$HOME/goWorkspace
 RUN mkdir -p $GOPATH/src
 COPY ./apprtc.tar.gz /root/
 RUN tar xzvf /root/apprtc.tar.gz -C /root/ && rm /root/apprtc.tar.gz
-RUN ln -s /root/apprtc/src/collider/collider $GOPATH/src 
+RUN ln -s /root/apprtc/src/collider/collider $GOPATH/src
 RUN ln -s /root/apprtc/src/collider/collidermain $GOPATH/src
 RUN ln -s /root/apprtc/src/collider/collidertest $GOPATH/src
 RUN go get collidermain
 RUN go install collidermain
 
 
-CMD $GOPATH/bin/collidermain -tls=true -port=$SSL_PORT -room-server=$HTTPS_ROOM_URL 
+# CMD $GOPATH/bin/collidermain -tls=true -port=$SSL_PORT -room-server=$HTTPS_ROOM_URL
 
-CMD less /dev/null
+CMD ping google.com
 
 EXPOSE 2222 $SSL_PORT 

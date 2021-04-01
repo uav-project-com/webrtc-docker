@@ -1,0 +1,14 @@
+---
+version: "3.5"
+services:
+  turnserver:
+    image: nobjta9xtq/turnserver:4.5.0.8
+    container_name: turnserver
+    ports:
+            - 3478:3478
+            - 5349:5349
+    restart: unless-stopped
+    volumes:
+            - ./turnserver.conf:/etc/turnserver.conf
+            - ./cert.pem:/root/cert.pem
+            - ./key.pem:/root/key.pem

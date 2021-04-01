@@ -2,7 +2,7 @@
 version: "3.5"
 services:
   openssh-server-ubuntu20.04:
-    image: webrtc:1.0
+    image: nobjta9xtq/webrtc:1.0
     container_name: webrtc
     hostname: openssh-server #optional
     environment:
@@ -25,3 +25,32 @@ services:
       - 5442:8442
       - 5000:8000
     restart: unless-stopped
+
+  turnserver:
+    image: nobjta9xtq/turnserver:4.5.0.8
+    container_name: turnserver
+    ports:
+      - 3478:3478
+      - 5349:5349
+    restart: unless-stopped
+    volumes:
+      - ./turnserver/deploy/turnserver.conf:/etc/turnserver.conf
+      - ./turnserver/deploy/cert.pem:/root/cert.pem
+      - ./turnserver/deploy/key.pem:/root/key.pem
+  collider:
+    image: nobjta9xtq/collider:1.0
+    container_name: collider
+    ports:
+      - 2223:2222
+      - 9443:9443
+    restart: unless-stopped
+    environment:
+      - SUDO_ACCESS=true
+      - PASSWORD_ACCESS=true
+      - USER_PASSWORD=canhthong
+      - USER_NAME=admin
+      - HTTPS_ROOM_URL=https://phicongtre.site:5443
+      - SSL_PORT=9443
+    volumes:
+      - ./collider/cert/key.pem:/cert/key.pem
+      - ./collider/cert/cert.pem:/cert/cert.pem
