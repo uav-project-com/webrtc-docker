@@ -19,8 +19,8 @@ RUN go get collidermain
 RUN go install collidermain
 
 
-# CMD $GOPATH/bin/collidermain -tls=true -port=$SSL_PORT -room-server=$HTTPS_ROOM_URL
+CMD $GOPATH/bin/collidermain -tls=true -port=9443 -room-server=$HTTPS_ROOM_URL
 
-CMD ping google.com
+# CMD ping google.com
 
-EXPOSE 2222 $SSL_PORT 
+EXPOSE 2222 9443
