@@ -15,14 +15,14 @@ services:
       - USER_NAME=admin # ssh optional
       - HOST=0.0.0.0 # listen public ip - very importance
     volumes:
-      - ./volume:/config # for ssh config
-      - ./webrtc/full.pem:/root/full.pem # all in one: key-private, cert file(public key), and bundle file
-      - ./webrtc/key.pem:/root/key.pem
-      - ./webrtc/constants.py:/root/app_engine/constants.py # for all config of apprtc project
+      - ${PWD}/volume:/config # for ssh config
+      - ${PWD}/webrtc/full.pem:/root/full.pem # all in one: key-private, cert file(public key), and bundle file
+      - ${PWD}/webrtc/key.pem:/root/key.pem
+      - ${PWD}/webrtc/constants.py:/root/app_engine/constants.py # for all config of apprtc project
     ports:
       - 2222:2222
-      - 5443:8443
-      - 5442:8442
+      - 8443:8443
+      - 8442:8442
       - 5000:8000
     restart: unless-stopped
 
@@ -34,9 +34,9 @@ services:
       - 5349:5349
     restart: unless-stopped
     volumes:
-      - ./turnserver/deploy/turnserver.conf:/etc/turnserver.conf
-      - ./turnserver/deploy/cert.pem:/root/cert.pem
-      - ./turnserver/deploy/key.pem:/root/key.pem
+      - ${PWD}/turnserver/deploy/turnserver.conf:/etc/turnserver.conf
+      - ${PWD}/turnserver/deploy/cert.pem:/root/cert.pem
+      - ${PWD}/turnserver/deploy/key.pem:/root/key.pem
   collider:
     image: nobjta9xtq/collider:1.0
     container_name: collider
@@ -49,8 +49,63 @@ services:
       - PASSWORD_ACCESS=true
       - USER_PASSWORD=canhthong
       - USER_NAME=admin
-      - HTTPS_ROOM_URL=https://phicongtre.site:5443
+      - HTTPS_ROOM_URL=https://phicongtre.site:8443
+    volumes:
+      - ${PWD}/collider/cert/key.pem:/cert/key.pem
+      - ${PWD}/collider/cert/cert.pem:/cert/cert.pem
+---
+version: "3.5"
+services:
+  openssh-server-ubuntu20.04:
+    image: nobjta9xtq/webrtc:1.0
+    container_name: webrtc
+    hostname: openssh-server #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - SUDO_ACCESS=true # ssh optional
+      - PASSWORD_ACCESS=true # ssh optional
+      - USER_PASSWORD=canhthong # ssh optional
+      - USER_NAME=admin # ssh optional
+      - HOST=0.0.0.0 # listen public ip - very importance
+    volumes:
+      - ${PWD}/volume:/config # for ssh config
+      - ${PWD}/webrtc/full.pem:/root/full.pem # all in one: key-private, cert file(public key), and bundle file
+      - ${PWD}/webrtc/key.pem:/root/key.pem
+      - ${PWD}/webrtc/constants.py:/root/app_engine/constants.py # for all config of apprtc project
+    ports:
+      - 2222:2222
+      - 8443:8443
+      - 8442:8442
+      - 5000:8000
+    restart: unless-stopped
+
+  turnserver:
+    image: nobjta9xtq/turnserver:4.5.0.8
+    container_name: turnserver
+    ports:
+      - 3478:3478
+      - 5349:5349
+    restart: unless-stopped
+    volumes:
+      - ${PWD}/turnserver/deploy/turnserver.conf:/etc/turnserver.conf
+      - ${PWD}/turnserver/deploy/cert.pem:/root/cert.pem
+      - ${PWD}/turnserver/deploy/key.pem:/root/key.pem
+  collider:
+    image: nobjta9xtq/collider:1.0
+    container_name: collider
+    ports:
+      - 2223:2222
+      - 9443:9443
+    restart: unless-stopped
+    environment:
+      - SUDO_ACCESS=true
+      - PASSWORD_ACCESS=true
+      - USER_PASSWORD=canhthong
+      - USER_NAME=admin
+      - HTTPS_ROOM_URL=https://phicongtre.site:8443
       - SSL_PORT=9443
     volumes:
-      - ./collider/cert/key.pem:/cert/key.pem
-      - ./collider/cert/cert.pem:/cert/cert.pem
+      - ${PWD}/collider/cert/key.pem:/cert/key.pem
+      - ${PWD}/collider/cert/cert.pem:/cert/cert.pem
