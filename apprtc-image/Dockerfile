@@ -24,6 +24,3 @@ CMD /root/google-cloud-sdk/bin/dev_appserver.py \
 # ssh, web, https web
 EXPOSE 2222 8442 8443 8000
 
-# config constant.py ra ngoài docker (file này không cần compile mà chạy luôn được)
-# tiep theo: tách riêng turnserver và colider ra riêng 2 docker khác nhau
-# tiep theo: turnserver len ok, webrtc dang khong connect duoc collider, collider dang bi reset lien tuc
