@@ -105,7 +105,6 @@ services:
       - USER_PASSWORD=canhthong
       - USER_NAME=admin
       - HTTPS_ROOM_URL=https://phicongtre.site:8443
-      - SSL_PORT=9443
     volumes:
       - ${PWD}/collider/cert/key.pem:/cert/key.pem
       - ${PWD}/collider/cert/cert.pem:/cert/cert.pem
